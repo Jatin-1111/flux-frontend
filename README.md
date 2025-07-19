@@ -1,38 +1,43 @@
-# Flux - Business Financial Operations Platform
+# Personal Expense Tracker
 
-## What is Flux?
+## What is This Project?
 
-Flux is a comprehensive B2B financial management platform designed to streamline business financial operations. We eliminate the need for multiple tools by providing expense management, invoice generation, client management, and financial reporting in one integrated platform.
+A smart, comprehensive personal expense tracking application that goes beyond basic expense logging. Built to actually help individuals manage their finances effectively with intelligent features, insights, and proper money management tools.
 
-### Target Market
-- **Small to Medium Businesses (5-500 employees)**
-- **Agencies, consultancies, startups**
-- **Companies tired of juggling Excel, paper receipts, and separate billing tools**
+### Target Users
+- **Individuals** wanting better control over personal finances
+- **Students** tracking budgets and expenses
+- **Freelancers** managing business and personal expenses
+- **Anyone** tired of basic expense apps that just store data without insights
 
 ### Value Proposition
-Instead of using 5+ different tools for financial operations, businesses get everything in one platform:
-- ✅ **Expense Management** - Digital receipt processing with AI OCR
-- ✅ **Invoice Generation** - Professional invoicing with client portal
-- ✅ **Financial Reporting** - Real-time insights and analytics
-- ✅ **Team Management** - Role-based access and approval workflows
-- ✅ **Client Management** - Centralized client database and payment tracking
+More than just "add expense, see total" - this is a complete personal financial management system:
+- 💰 **Smart Expense Tracking** - Intelligent categorization and recurring detection
+- 🎯 **Goal Management** - Savings goals with progress tracking
+- 📊 **Advanced Analytics** - Spending insights, trends, and predictions
+- 🔄 **Expense Splitting** - Share expenses with friends/family
+- 💱 **Multi-Currency Support** - Travel and international expense handling
+- 📈 **Income vs Expense Tracking** - Complete financial picture
+- 🔔 **Smart Budgets** - Intelligent alerts and budget management
 
 ### Business Model
-**Two-Tier B2B SaaS:**
-- **Business Tier:** $25-50/user/month (SMBs, startups, agencies)
-- **Enterprise Tier:** $75+/user/month (larger companies, advanced features)
+**Freemium Personal App:**
+- **Free Tier:** Basic expense tracking (100 expenses/month)
+- **Premium Tier:** $4.99/month (unlimited expenses, advanced features, insights)
 
 ---
 
 ## Frontend Technology Stack
 
 - **Framework:** Next.js 15 (App Router)
-- **Language:** TypeScript
+- **Language:** JavaScript (ES6+)
 - **Styling:** Tailwind CSS
 - **State Management:** Zustand
 - **HTTP Client:** Axios
-- **Authentication:** JWT with role-based access
-- **Payments:** Stripe integration
+- **Charts:** Recharts
+- **Forms:** React Hook Form
+- **Authentication:** JWT
+- **Payments:** Stripe integration (Premium subscriptions)
 - **Deployment:** Vercel
 
 ---
@@ -40,35 +45,42 @@ Instead of using 5+ different tools for financial operations, businesses get eve
 ## Project Structure
 
 ```
-flux-frontend/
+expense-tracker-frontend/
 ├── app/
 │   ├── (auth)/
 │   │   ├── login/
 │   │   └── signup/
-│   ├── dashboard/
-│   │   ├── expenses/
-│   │   ├── invoices/
-│   │   ├── clients/
-│   │   ├── reports/
-│   │   └── settings/
+│   ├── dashboard/           # Main expense overview
+│   ├── expenses/
+│   │   ├── add/            # Add new expense
+│   │   ├── recurring/      # Manage recurring expenses
+│   │   └── split/          # Split expenses with others
+│   ├── budgets/            # Budget management
+│   ├── goals/              # Savings goals
+│   ├── analytics/          # Insights and trends
+│   ├── income/             # Income tracking
+│   ├── settings/
 │   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
+│   ├── layout.js
+│   └── page.js
 ├── components/
-│   ├── ui/              # Reusable UI components
-│   ├── forms/           # Form components
-│   ├── charts/          # Data visualization
-│   └── layout/          # Navigation, headers
+│   ├── ui/                 # Reusable UI components
+│   ├── forms/              # Form components
+│   ├── charts/             # Data visualization
+│   ├── expense/            # Expense-specific components
+│   └── layout/             # Navigation, headers
 ├── lib/
-│   ├── api.ts           # API client setup
-│   ├── auth.ts          # Authentication utilities
-│   └── utils.ts         # Helper functions
+│   ├── api.js              # API client setup
+│   ├── auth.js             # Authentication utilities
+│   ├── currency.js         # Currency conversion utilities
+│   └── utils.js            # Helper functions
 ├── store/
-│   ├── authStore.ts     # Authentication state
-│   ├── expenseStore.ts  # Expense management state
-│   └── invoiceStore.ts  # Invoice management state
-└── types/
-    └── index.ts         # TypeScript definitions
+│   ├── authStore.js        # Authentication state
+│   ├── expenseStore.js     # Expense management state
+│   ├── budgetStore.js      # Budget management state
+│   └── goalStore.js        # Goals and savings state
+└── constants/
+    └── categories.js       # Default expense categories
 ```
 
 ---
@@ -92,6 +104,7 @@ cp .env.example .env.local
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:5000
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_key
+NEXT_PUBLIC_CURRENCY_API_KEY=your_currency_api_key
 ```
 
 ### 3. Development Commands
@@ -116,56 +129,60 @@ npm run lint
 
 ## User Flow & Features
 
-### Authentication Flow
-1. **Company Signup** → Admin creates company account
-2. **Team Invitation** → Admin invites team members
-3. **Role Assignment** → Users get appropriate permissions
-4. **Dashboard Access** → Role-based feature access
+## User Flow & Features
 
 ### Core User Journeys
 
-#### Expense Management Journey
-1. **Employee** uploads receipt photo
-2. **AI OCR** extracts amount, date, vendor
-3. **Employee** adds category and description
-4. **Manager** receives notification for approval
-5. **Manager** approves/rejects with comments
-6. **Admin** processes reimbursement
+#### Smart Expense Management Journey
+1. **User** opens app → quick add expense form
+2. **System** suggests category based on description/amount
+3. **User** adds expense with optional tags, location, currency
+4. **System** detects recurring patterns → suggests automation
+5. **System** updates budgets and provides instant feedback
 
-#### Invoice Generation Journey
-1. **Admin/Manager** creates new invoice
-2. **System** pulls client information
-3. **User** adds line items, applies taxes/discounts
-4. **System** generates professional PDF
-5. **Client** receives email with payment link
-6. **System** tracks payment status
+#### Budget & Goal Management Journey
+1. **User** sets monthly budgets per category
+2. **System** tracks spending in real-time
+3. **User** receives smart alerts at 75%, 90%, 100% of budget
+4. **System** suggests budget adjustments based on patterns
+5. **User** sets savings goals with automated progress tracking
 
-#### Financial Reporting Journey
-1. **Admin** accesses reports dashboard
-2. **System** displays real-time metrics
-3. **User** filters by date, category, department
-4. **System** generates exportable reports
-5. **User** shares insights with stakeholders
+#### Expense Splitting Journey
+1. **User** adds shared expense (dinner, trip, etc.)
+2. **System** calculates splits (equal, custom, percentage)
+3. **User** sends split requests via email/link
+4. **Friends** mark their portion as paid
+5. **System** tracks who owes what
 
-### User Roles & Permissions
+#### Financial Analytics Journey
+1. **User** accesses insights dashboard
+2. **System** shows spending trends, budget health
+3. **User** gets personalized recommendations
+4. **System** predicts future spending patterns
+5. **User** exports data for taxes or analysis
 
-#### Admin
-- Full platform access
-- User management
-- Billing & subscription management
-- Advanced reporting
-- Company settings
+### Advanced Features
 
-#### Manager
-- Approve/reject expenses
-- Create invoices
-- View team reports
-- Client management
+#### Recurring Expense Intelligence
+- **Auto-Detection:** "You've paid Netflix $15.99 for 3 months - make it recurring?"
+- **Smart Scheduling:** Automatically creates future expenses
+- **Flexible Rules:** Weekly, monthly, yearly with end dates
 
-#### Employee
-- Submit expenses
-- View personal reports
-- Access client portal (if applicable)
+#### Multi-Currency Support
+- **Real-time Exchange Rates:** Auto-fetch current rates
+- **Travel Mode:** Easily switch primary currency
+- **Conversion History:** Track exchange rate changes
+
+#### Goal & Savings Tracking
+- **Visual Progress:** Charts showing goal completion
+- **Auto-Save Rules:** "Save $200 every payday toward emergency fund"
+- **Milestone Celebrations:** Gamification elements
+
+#### Smart Analytics & Insights
+- **Spending Trends:** "Food spending up 40% vs last month"
+- **Budget Predictions:** "On track to exceed budget by $150"
+- **Recommendations:** "Consider meal prep - restaurant visits increased 60%"
+- **Monthly Reports:** Automated financial health summaries
 
 ---
 
@@ -178,23 +195,32 @@ npm run lint
 - **Layout Components:** Navigation, sidebars, headers
 
 ### State Management Pattern
-```typescript
+```javascript
 // Example: Expense Store
 const useExpenseStore = create((set, get) => ({
   expenses: [],
   loading: false,
+  filters: { category: 'all', dateRange: 'thisMonth' },
   
-  fetchExpenses: async () => {
+  fetchExpenses: async (filters) => {
     set({ loading: true })
-    const expenses = await api.get('/expenses')
+    const expenses = await api.get('/expenses', { params: filters })
     set({ expenses, loading: false })
   },
   
-  submitExpense: async (expenseData) => {
+  addExpense: async (expenseData) => {
     const newExpense = await api.post('/expenses', expenseData)
     set(state => ({ 
-      expenses: [...state.expenses, newExpense] 
+      expenses: [newExpense, ...state.expenses] 
     }))
+  },
+  
+  detectRecurring: (expense) => {
+    const similar = get().expenses.filter(e => 
+      e.description.toLowerCase() === expense.description.toLowerCase() &&
+      Math.abs(e.amount - expense.amount) < 1
+    )
+    return similar.length >= 2
   }
 }))
 ```
@@ -204,8 +230,8 @@ const useExpenseStore = create((set, get) => ({
 ## API Integration
 
 ### Base API Setup
-```typescript
-// lib/api.ts
+```javascript
+// lib/api.js
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
@@ -221,15 +247,29 @@ api.interceptors.request.use(config => {
   }
   return config
 })
+
+// Handle currency conversion
+api.interceptors.response.use(response => {
+  if (response.data.expenses) {
+    response.data.expenses = response.data.expenses.map(expense => ({
+      ...expense,
+      displayAmount: convertCurrency(expense.amount, expense.currency, userCurrency)
+    }))
+  }
+  return response
+})
 ```
 
 ### Key API Endpoints
 - `POST /auth/login` - User authentication
-- `GET /expenses` - Fetch expenses
+- `GET /expenses` - Fetch expenses with filters
 - `POST /expenses` - Create expense
-- `GET /invoices` - Fetch invoices
-- `POST /invoices` - Create invoice
-- `GET /reports/dashboard` - Dashboard metrics
+- `POST /expenses/recurring` - Create recurring expense
+- `POST /expenses/split` - Split expense with others
+- `GET /budgets` - Get budget status
+- `POST /goals` - Create savings goal
+- `GET /analytics/insights` - Get spending insights
+- `GET /income` - Track income sources
 
 ---
 
@@ -248,8 +288,9 @@ npm start
 
 ### Environment Variables (Production)
 ```env
-NEXT_PUBLIC_API_URL=https://api.flux.yourdomain.com
+NEXT_PUBLIC_API_URL=https://api.expensetracker.com
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_your_live_stripe_key
+NEXT_PUBLIC_CURRENCY_API_KEY=your_production_currency_key
 ```
 
 ---
@@ -266,20 +307,26 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_your_live_stripe_key
 
 ## Roadmap
 
-### Phase 1 (MVP)
-- ✅ Authentication & tenant management
-- ✅ Basic expense management
-- ✅ Invoice generation
-- ✅ Simple reporting
+### Phase 1 (MVP - 2 Weeks)
+- ✅ User authentication
+- ✅ Basic expense CRUD
+- ✅ Categories and budgets
+- ✅ Simple dashboard
 
-### Phase 2 (Business Growth)
-- 📱 Mobile app
-- 🔗 Third-party integrations (QuickBooks, Xero)
-- 📊 Advanced analytics
-- 🤖 Enhanced AI features
+### Phase 2 (Enhanced Features - 2 Weeks)
+- 🔄 Recurring expense detection
+- 💱 Multi-currency support
+- 🎯 Savings goals
+- 📊 Basic analytics
 
-### Phase 3 (Enterprise)
-- 👥 HR & Payroll modules
-- 📈 Advanced financial statements
-- 🔐 Enterprise security features
-- 🌍 Multi-currency support
+### Phase 3 (Advanced Features - 3 Weeks)
+- 🤝 Expense splitting
+- 💰 Income tracking
+- 📈 Advanced insights
+- 📱 Mobile PWA
+
+### Phase 4 (Premium Features)
+- 🔗 Bank integrations
+- 📄 Advanced export options
+- 🤖 AI spending insights
+- 🌍 Investment tracking
