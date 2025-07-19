@@ -2,65 +2,14 @@
 'use client'
 import ProtectedRoute from '@/components/auth/ProtectedRoute'
 import { useAuth } from '@/lib/auth-context'
-import { LogOut, User, Settings, Plus, TrendingUp, TrendingDown, Wallet, PieChart, Calendar, Bell } from 'lucide-react'
+import { Plus, TrendingUp, TrendingDown, Wallet, PieChart, Calendar } from 'lucide-react'
 
 export default function DashboardPage() {
-    const { user, logout } = useAuth()
+    const { user } = useAuth()
 
     return (
         <ProtectedRoute>
             <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-                {/* Top Navigation */}
-                <nav className="bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-200/50 sticky top-0 z-50">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex justify-between items-center h-16">
-                            <div className="flex items-center space-x-4">
-                                <div className="flex items-center space-x-3">
-                                    <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                                        <Wallet className="w-4 h-4 text-white" />
-                                    </div>
-                                    <h1 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-                                        Flux
-                                    </h1>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center space-x-4">
-                                <button className="relative p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                    <Bell size={20} />
-                                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
-                                </button>
-
-                                <div className="flex items-center space-x-3 px-3 py-2 bg-gray-50 rounded-lg">
-                                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                                        <span className="text-white text-sm font-semibold">
-                                            {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
-                                        </span>
-                                    </div>
-                                    <div className="hidden md:block">
-                                        <p className="text-sm font-medium text-gray-900">
-                                            {user?.firstName} {user?.lastName}
-                                        </p>
-                                        <p className="text-xs text-gray-500">Premium User</p>
-                                    </div>
-                                </div>
-
-                                <button className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                                    <Settings size={20} />
-                                </button>
-
-                                <button
-                                    onClick={logout}
-                                    className="flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
-                                >
-                                    <LogOut size={16} />
-                                    <span className="hidden md:inline">Logout</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-
                 {/* Dashboard Content */}
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     {/* Welcome Header */}
