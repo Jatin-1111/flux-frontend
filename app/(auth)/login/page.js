@@ -58,7 +58,7 @@ export default function LoginPage() {
                             <h1 className="text-2xl font-bold">Flux</h1>
                         </div>
                         <h2 className="text-4xl font-bold mb-4 leading-tight">
-                            Take control of your 
+                            Take control of your
                             <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"> finances</span>
                         </h2>
                         <p className="text-xl text-gray-300 mb-8">
@@ -158,14 +158,14 @@ export default function LoginPage() {
 
                             <div className="flex items-center justify-between">
                                 <label className="flex items-center space-x-2 cursor-pointer">
-                                    <input 
-                                        type="checkbox" 
-                                        className="w-4 h-4 rounded border border-white/20 bg-white/5 text-blue-500 focus:ring-blue-500/20" 
+                                    <input
+                                        type="checkbox"
+                                        className="w-4 h-4 rounded border border-white/20 bg-white/5 text-blue-500 focus:ring-blue-500/20"
                                     />
                                     <span className="text-sm text-gray-300">Remember me</span>
                                 </label>
-                                <Link 
-                                    href="/forgot-password" 
+                                <Link
+                                    href="/forgot-password"
                                     className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
                                 >
                                     Forgot password?
@@ -194,8 +194,8 @@ export default function LoginPage() {
                         <div className="mt-8 text-center">
                             <p className="text-gray-300">
                                 Don&apos;t have an account?{' '}
-                                <Link 
-                                    href="/signup" 
+                                <Link
+                                    href="/signup"
                                     className="text-blue-400 hover:text-blue-300 font-semibold transition-colors"
                                 >
                                     Create account
