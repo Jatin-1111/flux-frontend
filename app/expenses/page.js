@@ -112,7 +112,7 @@ export default function ExpensesPage() {
     // Fetch user stats
     const fetchUserStats = async () => {
         try {
-            if (!user?.isPremium && !user?.isPremium()) {
+            if (!user?.isPremium) {
                 // Get current month expense count for free users
                 const now = new Date()
                 const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString()
@@ -246,8 +246,8 @@ export default function ExpensesPage() {
                             {/* Free user limit indicator */}
                             {userStats && !user?.isPremium && (
                                 <div className={`px-3 py-2 rounded-lg text-sm font-medium ${userStats.isNearLimit
-                                        ? 'bg-orange-100 text-orange-800'
-                                        : 'bg-blue-100 text-blue-800'
+                                    ? 'bg-orange-100 text-orange-800'
+                                    : 'bg-blue-100 text-blue-800'
                                     }`}>
                                     {userStats.monthlyExpenses}/{userStats.monthlyLimit} this month
                                 </div>
