@@ -39,8 +39,8 @@ export default function Header() {
                         <Link
                             href="/dashboard"
                             className={`text-sm font-medium transition-colors hover:text-blue-600 ${pathname === '/dashboard'
-                                    ? 'text-blue-600'
-                                    : 'text-gray-700'
+                                ? 'text-blue-600'
+                                : 'text-gray-700'
                                 }`}
                         >
                             Dashboard
@@ -48,8 +48,8 @@ export default function Header() {
                         <Link
                             href="/expenses"
                             className={`text-sm font-medium transition-colors hover:text-blue-600 ${pathname.startsWith('/expenses')
-                                    ? 'text-blue-600'
-                                    : 'text-gray-700'
+                                ? 'text-blue-600'
+                                : 'text-gray-700'
                                 }`}
                         >
                             Expenses
@@ -57,8 +57,8 @@ export default function Header() {
                         <Link
                             href="/budgets"
                             className={`text-sm font-medium transition-colors hover:text-blue-600 ${pathname === '/budgets'
-                                    ? 'text-blue-600'
-                                    : 'text-gray-700'
+                                ? 'text-blue-600'
+                                : 'text-gray-700'
                                 }`}
                         >
                             Budgets
@@ -66,8 +66,8 @@ export default function Header() {
                         <Link
                             href="/analytics"
                             className={`text-sm font-medium transition-colors hover:text-blue-600 ${pathname === '/analytics'
-                                    ? 'text-blue-600'
-                                    : 'text-gray-700'
+                                ? 'text-blue-600'
+                                : 'text-gray-700'
                                 }`}
                         >
                             Analytics
@@ -75,8 +75,8 @@ export default function Header() {
                         <Link
                             href="/goals"
                             className={`text-sm font-medium transition-colors hover:text-blue-600 ${pathname === '/goals'
-                                    ? 'text-blue-600'
-                                    : 'text-gray-700'
+                                ? 'text-blue-600'
+                                : 'text-gray-700'
                                 }`}
                         >
                             Goals
@@ -85,12 +85,6 @@ export default function Header() {
 
                     {/* Right Side */}
                     <div className="flex items-center space-x-4">
-                        {/* Notifications */}
-                        <button className="relative p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-                            <Bell size={20} />
-                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
-                        </button>
-
                         {/* User Profile */}
                         <div className="flex items-center space-x-3 px-3 py-2 bg-gray-50 rounded-lg">
                             <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
@@ -132,8 +126,8 @@ export default function Header() {
                     <Link
                         href="/dashboard"
                         className={`flex flex-col items-center space-y-1 p-2 rounded-lg transition-colors ${pathname === '/dashboard'
-                                ? 'text-blue-600 bg-blue-50'
-                                : 'text-gray-600 hover:bg-gray-50'
+                            ? 'text-blue-600 bg-blue-50'
+                            : 'text-gray-600 hover:bg-gray-50'
                             }`}
                     >
                         <Wallet size={20} />
@@ -142,8 +136,8 @@ export default function Header() {
                     <Link
                         href="/expenses"
                         className={`flex flex-col items-center space-y-1 p-2 rounded-lg transition-colors ${pathname.startsWith('/expenses')
-                                ? 'text-blue-600 bg-blue-50'
-                                : 'text-gray-600 hover:bg-gray-50'
+                            ? 'text-blue-600 bg-blue-50'
+                            : 'text-gray-600 hover:bg-gray-50'
                             }`}
                     >
                         <User size={20} />
@@ -152,8 +146,8 @@ export default function Header() {
                     <Link
                         href="/budgets"
                         className={`flex flex-col items-center space-y-1 p-2 rounded-lg transition-colors ${pathname === '/budgets'
-                                ? 'text-blue-600 bg-blue-50'
-                                : 'text-gray-600 hover:bg-gray-50'
+                            ? 'text-blue-600 bg-blue-50'
+                            : 'text-gray-600 hover:bg-gray-50'
                             }`}
                     >
                         <Settings size={20} />
@@ -162,8 +156,8 @@ export default function Header() {
                     <Link
                         href="/analytics"
                         className={`flex flex-col items-center space-y-1 p-2 rounded-lg transition-colors ${pathname === '/analytics'
-                                ? 'text-blue-600 bg-blue-50'
-                                : 'text-gray-600 hover:bg-gray-50'
+                            ? 'text-blue-600 bg-blue-50'
+                            : 'text-gray-600 hover:bg-gray-50'
                             }`}
                     >
                         <Bell size={20} />
