@@ -1,6 +1,7 @@
 // app/analytics/page.js
 'use client'
 import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '@/lib/auth-context'
 import { api } from '@/lib/api'
 import ProtectedRoute from '@/components/auth/ProtectedRoute'
@@ -72,6 +73,106 @@ const CATEGORY_NAMES = {
     recharge: 'Recharge & Bills',
     investment: 'Investment',
     other: 'Other'
+}
+
+// Animation variants
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.2
+        }
+    }
+}
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.5,
+            ease: "easeOut"
+        }
+    }
+}
+
+const cardVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+            duration: 0.4,
+            ease: "easeOut"
+        }
+    },
+    hover: {
+        scale: 1.02,
+        transition: {
+            duration: 0.2,
+            ease: "easeInOut"
+        }
+    }
+}
+
+const numberCounterVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+            duration: 0.6,
+            ease: "easeOut",
+            delay: 0.3
+        }
+    }
+}
+
+const loadingVariants = {
+    animate: {
+        rotate: 360,
+        transition: {
+            duration: 1,
+            repeat: Infinity,
+            ease: "linear"
+        }
+    }
+}
+
+const insightVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: (i) => ({
+        opacity: 1,
+        x: 0,
+        transition: {
+            delay: i * 0.1,
+            duration: 0.5,
+            ease: "easeOut"
+        }
+    }),
+    hover: {
+        x: 5,
+        transition: {
+            duration: 0.2,
+            ease: "easeInOut"
+        }
+    }
+}
+
+const chartContainerVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+            duration: 0.6,
+            ease: "easeOut",
+            delay: 0.4
+        }
+    }
 }
 
 export default function AnalyticsPage() {
@@ -157,10 +258,26 @@ export default function AnalyticsPage() {
         return (
             <ProtectedRoute>
                 <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
-                    <div className="text-center">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                        <p className="text-gray-600">Crunching your financial data...</p>
-                    </div>
+                    <motion.div
+                        className="text-center"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <motion.div
+                            className="w-12 h-12 border-b-2 border-blue-600 rounded-full mx-auto mb-4"
+                            variants={loadingVariants}
+                            animate="animate"
+                        />
+                        <motion.p
+                            className="text-gray-600"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.2, duration: 0.5 }}
+                        >
+                            Crunching your financial data...
+                        </motion.p>
+                    </motion.div>
                 </div>
             </ProtectedRoute>
         )
@@ -169,111 +286,165 @@ export default function AnalyticsPage() {
     return (
         <ProtectedRoute>
             <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <motion.div
+                    className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                >
                     {/* Header */}
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+                    <motion.div
+                        className="flex flex-col md:flex-row md:items-center md:justify-between mb-8"
+                        variants={itemVariants}
+                    >
                         <div>
-                            <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-3">
-                                <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                            <motion.h1
+                                className="text-3xl font-bold text-gray-900 flex items-center space-x-3"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.6, ease: "easeOut" }}
+                            >
+                                <motion.div
+                                    className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center"
+                                    initial={{ rotate: -10, scale: 0.8 }}
+                                    animate={{ rotate: 0, scale: 1 }}
+                                    transition={{ duration: 0.5, delay: 0.2 }}
+                                >
                                     <BarChart3 className="w-5 h-5 text-white" />
-                                </div>
+                                </motion.div>
                                 <span>Financial Analytics</span>
-                            </h1>
-                            <p className="text-gray-600 mt-1">Understand your spending patterns and make smarter decisions</p>
+                            </motion.h1>
+                            <motion.p
+                                className="text-gray-600 mt-1"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.4, duration: 0.5 }}
+                            >
+                                Understand your spending patterns and make smarter decisions
+                            </motion.p>
                         </div>
 
-                        <div className="mt-4 md:mt-0 flex items-center space-x-4">
-                            <select
+                        <motion.div
+                            className="mt-4 md:mt-0 flex items-center space-x-4"
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: 0.3 }}
+                        >
+                            <motion.select
                                 value={dateRange}
                                 onChange={(e) => setDateRange(e.target.value)}
                                 className="px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                                whileFocus={{ scale: 1.02 }}
+                                transition={{ duration: 0.2 }}
                             >
                                 <option value="week">This Week</option>
                                 <option value="month">This Month</option>
                                 <option value="quarter">This Quarter</option>
                                 <option value="year">This Year</option>
-                            </select>
-                            <button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center space-x-2">
+                            </motion.select>
+                            <motion.button
+                                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-xl transition-all duration-200 shadow-lg flex items-center space-x-2"
+                                whileHover={{ scale: 1.05, y: -2 }}
+                                whileTap={{ scale: 0.98 }}
+                                transition={{ duration: 0.2 }}
+                            >
                                 <Download size={16} />
                                 <span>Export</span>
-                            </button>
-                        </div>
-                    </div>
+                            </motion.button>
+                        </motion.div>
+                    </motion.div>
 
                     {/* Key Metrics */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                        <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-sm font-medium text-gray-500">Total Spent</p>
-                                    <p className="text-2xl font-bold text-gray-900">
-                                        {formatCurrency(analytics.monthlyStats?.reduce((acc, cat) => acc + cat.total, 0) || 0)}
-                                    </p>
-                                    <div className="flex items-center mt-1">
-                                        {getChangeIcon(insights?.monthlyComparison?.changePercentage || 0)}
-                                        <span className={`text-sm ${getChangeColor(insights?.monthlyComparison?.changePercentage || 0)}`}>
-                                            {Math.abs(insights?.monthlyComparison?.changePercentage || 0).toFixed(1)}% vs last month
-                                        </span>
+                    <motion.div
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+                        variants={containerVariants}
+                    >
+                        {[
+                            {
+                                title: "Total Spent",
+                                value: formatCurrency(analytics.monthlyStats?.reduce((acc, cat) => acc + cat.total, 0) || 0),
+                                change: insights?.monthlyComparison?.changePercentage || 0,
+                                changeText: `${Math.abs(insights?.monthlyComparison?.changePercentage || 0).toFixed(1)}% vs last month`,
+                                icon: DollarSign,
+                                gradient: "from-red-500 to-pink-500"
+                            },
+                            {
+                                title: "Budget Status",
+                                value: `${((budgetSummary.totalSpent / budgetSummary.totalBudget) * 100 || 0).toFixed(1)}%`,
+                                change: 0,
+                                changeText: `${formatCurrency(budgetSummary.totalRemaining || 0)} remaining`,
+                                icon: Target,
+                                gradient: "from-green-500 to-emerald-500"
+                            },
+                            {
+                                title: "Transactions",
+                                value: analytics.monthlyStats?.reduce((acc, cat) => acc + cat.count, 0) || 0,
+                                change: 0,
+                                changeText: "This month",
+                                icon: Calendar,
+                                gradient: "from-blue-500 to-cyan-500"
+                            },
+                            {
+                                title: "Avg/Day",
+                                value: formatCurrency((analytics.monthlyStats?.reduce((acc, cat) => acc + cat.total, 0) || 0) / new Date().getDate()),
+                                change: 0,
+                                changeText: "Daily spending",
+                                icon: TrendingUp,
+                                gradient: "from-purple-500 to-indigo-500"
+                            }
+                        ].map((metric, index) => (
+                            <motion.div
+                                key={index}
+                                className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50"
+                                variants={cardVariants}
+                                whileHover="hover"
+                                custom={index}
+                            >
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className="text-sm font-medium text-gray-500">{metric.title}</p>
+                                        <motion.p
+                                            className="text-2xl font-bold text-gray-900"
+                                            variants={numberCounterVariants}
+                                        >
+                                            {metric.value}
+                                        </motion.p>
+                                        <div className="flex items-center mt-1">
+                                            {getChangeIcon(metric.change)}
+                                            <span className={`text-sm ${getChangeColor(metric.change)}`}>
+                                                {metric.changeText}
+                                            </span>
+                                        </div>
                                     </div>
+                                    <motion.div
+                                        className={`w-12 h-12 bg-gradient-to-r ${metric.gradient} rounded-xl flex items-center justify-center`}
+                                        initial={{ scale: 0, rotate: -90 }}
+                                        animate={{ scale: 1, rotate: 0 }}
+                                        transition={{
+                                            duration: 0.5,
+                                            delay: 0.2 + (index * 0.1),
+                                            type: "spring",
+                                            stiffness: 200
+                                        }}
+                                    >
+                                        <metric.icon className="w-6 h-6 text-white" />
+                                    </motion.div>
                                 </div>
-                                <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-pink-500 rounded-xl flex items-center justify-center">
-                                    <DollarSign className="w-6 h-6 text-white" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-sm font-medium text-gray-500">Budget Status</p>
-                                    <p className="text-2xl font-bold text-gray-900">
-                                        {((budgetSummary.totalSpent / budgetSummary.totalBudget) * 100 || 0).toFixed(1)}%
-                                    </p>
-                                    <p className="text-sm text-gray-600 mt-1">
-                                        {formatCurrency(budgetSummary.totalRemaining || 0)} remaining
-                                    </p>
-                                </div>
-                                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
-                                    <Target className="w-6 h-6 text-white" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-sm font-medium text-gray-500">Transactions</p>
-                                    <p className="text-2xl font-bold text-gray-900">
-                                        {analytics.monthlyStats?.reduce((acc, cat) => acc + cat.count, 0) || 0}
-                                    </p>
-                                    <p className="text-sm text-blue-600 mt-1">This month</p>
-                                </div>
-                                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
-                                    <Calendar className="w-6 h-6 text-white" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-sm font-medium text-gray-500">Avg/Day</p>
-                                    <p className="text-2xl font-bold text-gray-900">
-                                        {formatCurrency((analytics.monthlyStats?.reduce((acc, cat) => acc + cat.total, 0) || 0) / new Date().getDate())}
-                                    </p>
-                                    <p className="text-sm text-purple-600 mt-1">Daily spending</p>
-                                </div>
-                                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-xl flex items-center justify-center">
-                                    <TrendingUp className="w-6 h-6 text-white" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
 
                     {/* Charts Row 1 */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <motion.div
+                        className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8"
+                        variants={containerVariants}
+                    >
                         {/* Spending Trend */}
-                        <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50">
+                        <motion.div
+                            className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50"
+                            variants={cardVariants}
+                            whileHover="hover"
+                        >
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-lg font-semibold text-gray-900">Spending Trend</h3>
                                 <div className="flex items-center space-x-2 text-sm text-gray-500">
@@ -281,7 +452,10 @@ export default function AnalyticsPage() {
                                     <span>Last 6 months</span>
                                 </div>
                             </div>
-                            <div className="h-80">
+                            <motion.div
+                                className="h-80"
+                                variants={chartContainerVariants}
+                            >
                                 <ResponsiveContainer width="100%" height="100%">
                                     <AreaChart data={spendingTrendData}>
                                         <defs>
@@ -312,11 +486,15 @@ export default function AnalyticsPage() {
                                         />
                                     </AreaChart>
                                 </ResponsiveContainer>
-                            </div>
-                        </div>
+                            </motion.div>
+                        </motion.div>
 
                         {/* Category Breakdown */}
-                        <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50">
+                        <motion.div
+                            className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50"
+                            variants={cardVariants}
+                            whileHover="hover"
+                        >
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-lg font-semibold text-gray-900">Category Breakdown</h3>
                                 <div className="flex items-center space-x-2 text-sm text-gray-500">
@@ -324,7 +502,10 @@ export default function AnalyticsPage() {
                                     <span>This month</span>
                                 </div>
                             </div>
-                            <div className="h-80">
+                            <motion.div
+                                className="h-80"
+                                variants={chartContainerVariants}
+                            >
                                 <ResponsiveContainer width="100%" height="100%">
                                     <RechartsPieChart>
                                         <Pie
@@ -351,14 +532,21 @@ export default function AnalyticsPage() {
                                         />
                                     </RechartsPieChart>
                                 </ResponsiveContainer>
-                            </div>
-                        </div>
-                    </div>
+                            </motion.div>
+                        </motion.div>
+                    </motion.div>
 
                     {/* Charts Row 2 */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <motion.div
+                        className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8"
+                        variants={containerVariants}
+                    >
                         {/* Daily Spending */}
-                        <div className="lg:col-span-2 bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50">
+                        <motion.div
+                            className="lg:col-span-2 bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50"
+                            variants={cardVariants}
+                            whileHover="hover"
+                        >
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-lg font-semibold text-gray-900">Daily Spending</h3>
                                 <div className="flex items-center space-x-2 text-sm text-gray-500">
@@ -366,7 +554,10 @@ export default function AnalyticsPage() {
                                     <span>This month</span>
                                 </div>
                             </div>
-                            <div className="h-80">
+                            <motion.div
+                                className="h-80"
+                                variants={chartContainerVariants}
+                            >
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={dailySpendingData}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
@@ -384,11 +575,15 @@ export default function AnalyticsPage() {
                                         <Bar dataKey="amount" fill="#8B5CF6" radius={[4, 4, 0, 0]} />
                                     </BarChart>
                                 </ResponsiveContainer>
-                            </div>
-                        </div>
+                            </motion.div>
+                        </motion.div>
 
                         {/* Top Categories */}
-                        <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50">
+                        <motion.div
+                            className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50"
+                            variants={cardVariants}
+                            whileHover="hover"
+                        >
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-lg font-semibold text-gray-900">Top Categories</h3>
                                 <div className="flex items-center space-x-2 text-sm text-gray-500">
@@ -396,28 +591,48 @@ export default function AnalyticsPage() {
                                     <span>Highest spending</span>
                                 </div>
                             </div>
-                            <div className="space-y-4">
+                            <motion.div
+                                className="space-y-4"
+                                variants={containerVariants}
+                            >
                                 {categoryData.slice(0, 5).map((category, index) => (
-                                    <div key={index} className="flex items-center justify-between">
+                                    <motion.div
+                                        key={index}
+                                        className="flex items-center justify-between"
+                                        variants={itemVariants}
+                                        whileHover={{ x: 5 }}
+                                        transition={{ duration: 0.2 }}
+                                    >
                                         <div className="flex items-center space-x-3">
-                                            <div
+                                            <motion.div
                                                 className="w-4 h-4 rounded-full"
                                                 style={{ backgroundColor: category.color }}
-                                            ></div>
+                                                initial={{ scale: 0 }}
+                                                animate={{ scale: 1 }}
+                                                transition={{
+                                                    delay: index * 0.1,
+                                                    type: "spring",
+                                                    stiffness: 300
+                                                }}
+                                            />
                                             <span className="text-sm font-medium text-gray-900">{category.name}</span>
                                         </div>
                                         <div className="text-right">
                                             <p className="text-sm font-semibold text-gray-900">{formatCurrency(category.value)}</p>
                                             <p className="text-xs text-gray-500">{category.count} transactions</p>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                 ))}
-                            </div>
-                        </div>
-                    </div>
+                            </motion.div>
+                        </motion.div>
+                    </motion.div>
 
                     {/* Insights Section */}
-                    <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50">
+                    <motion.div
+                        className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-white/50"
+                        variants={cardVariants}
+                        whileHover="hover"
+                    >
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-lg font-semibold text-gray-900">Financial Insights</h3>
                             <div className="flex items-center space-x-2 text-sm text-gray-500">
@@ -426,31 +641,66 @@ export default function AnalyticsPage() {
                             </div>
                         </div>
 
-                        {insights && insights.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {insights.map((insight, index) => (
-                                    <div key={index} className="p-4 rounded-xl border border-gray-200 bg-gray-50/50">
-                                        <div className="flex items-start space-x-3">
-                                            {getInsightIcon(insight.type)}
-                                            <div>
-                                                <p className="text-sm font-medium text-gray-900">{insight.message}</p>
-                                                <p className="text-xs text-gray-500 mt-1">
-                                                    {insight.priority === 'high' ? 'High Priority' :
-                                                        insight.priority === 'medium' ? 'Medium Priority' : 'Low Priority'}
-                                                </p>
+                        <AnimatePresence mode="wait">
+                            {insights && insights.length > 0 ? (
+                                <motion.div
+                                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+                                    variants={containerVariants}
+                                    initial="hidden"
+                                    animate="visible"
+                                >
+                                    {insights.map((insight, index) => (
+                                        <motion.div
+                                            key={index}
+                                            className="p-4 rounded-xl border border-gray-200 bg-gray-50/50"
+                                            variants={insightVariants}
+                                            whileHover="hover"
+                                            custom={index}
+                                        >
+                                            <div className="flex items-start space-x-3">
+                                                <motion.div
+                                                    initial={{ scale: 0, rotate: -90 }}
+                                                    animate={{ scale: 1, rotate: 0 }}
+                                                    transition={{
+                                                        delay: index * 0.1 + 0.3,
+                                                        type: "spring",
+                                                        stiffness: 200
+                                                    }}
+                                                >
+                                                    {getInsightIcon(insight.type)}
+                                                </motion.div>
+                                                <div>
+                                                    <p className="text-sm font-medium text-gray-900">{insight.message}</p>
+                                                    <p className="text-xs text-gray-500 mt-1">
+                                                        {insight.priority === 'high' ? 'High Priority' :
+                                                            insight.priority === 'medium' ? 'Medium Priority' : 'Low Priority'}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="text-center py-8">
-                                <Wallet className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                                <p className="text-gray-500">Add more expenses to get personalized insights</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
+                                        </motion.div>
+                                    ))}
+                                </motion.div>
+                            ) : (
+                                <motion.div
+                                    className="text-center py-8"
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.9 }}
+                                    transition={{ duration: 0.5 }}
+                                >
+                                    <motion.div
+                                        initial={{ y: 10, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        transition={{ delay: 0.2, duration: 0.5 }}
+                                    >
+                                        <Wallet className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                                        <p className="text-gray-500">Add more expenses to get personalized insights</p>
+                                    </motion.div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </motion.div>
+                </motion.div>
             </div>
         </ProtectedRoute>
     )
